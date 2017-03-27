@@ -1,0 +1,12 @@
+FROM nginx:1.11.10-alpine
+COPY nginx.conf /etc/nginx/
+COPY nginx-with-ssl.conf /etc/nginx/
+
+RUN apk update
+RUN apk add openssl
+RUN openssl dhparam -out /etc/nginx/dhparams.pem 2048
+
+COPY install-cert.sh /etc/nginx/
+
+# default command
+CMD /etc/nginx/install-cert.sh
