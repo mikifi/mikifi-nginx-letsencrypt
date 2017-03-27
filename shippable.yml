@@ -1,0 +1,20 @@
+build:
+  ci:
+    -  docker build -t mikifi/nginx-letsencrypt .
+push:
+    - docker push mikifi/nginx-letsencrypt:latest
+
+branches:
+  only:
+    - master
+
+integrations:                               #required only for private images
+  hub:
+    - integrationName: dockerHub
+      type: docker
+      branches:
+        only:
+          - master
+
+
+
