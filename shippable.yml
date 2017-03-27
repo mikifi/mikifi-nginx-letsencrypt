@@ -15,3 +15,14 @@ integrations:                               #required only for private images
       branches:
         only:
           - master
+  notifications:
+    - integrationName: Slack-development
+      type: slack
+      recipients:
+        - "#development"
+      branches:
+        only:
+          - master
+          - dev
+      on_success: always
+      on_failure: always
