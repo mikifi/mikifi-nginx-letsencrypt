@@ -1,7 +1,7 @@
 build:
   ci:
     -  docker build -t mikifi/nginx-letsencrypt .
-push:
+  post_ci:
     - docker push mikifi/nginx-letsencrypt:latest
 
 branches:
@@ -15,6 +15,3 @@ integrations:                               #required only for private images
       branches:
         only:
           - master
-
-
-
