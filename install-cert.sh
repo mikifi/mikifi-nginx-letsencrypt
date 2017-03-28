@@ -15,9 +15,6 @@ if [ ! -d "/etc/letsencrypt/live/$MY_DOMAIN_NAME" ]; then
   # Put your domain name into the nginx reverse proxy config.
   sed -i "s/___my.example.com___/$MY_DOMAIN_NAME/g" /etc/nginx/nginx.conf
 
-  sed -i "s/___LETSENCRYPT_ADDR___/$LETSENCRYPT_ADDR/g" /etc/nginx/nginx.conf
-  sed -i "s/___LETSENCRYPT_PORT___/$LETSENCRYPT_PORT/g" /etc/nginx/nginx.conf
-
   cat /etc/nginx/nginx.conf
   echo .
   echo Firing up nginx in the background.
@@ -53,10 +50,6 @@ if [ ! -d "/etc/letsencrypt/live/$MY_DOMAIN_NAME" ]; then
   # Add your app's container IP and port into config
   sed -i "s/___APPLICATION_ADDR___/$APP_ADDR/g" /etc/nginx/nginx-with-ssl.conf
   sed -i "s/___APPLICATION_PORT___/$APP_PORT/g" /etc/nginx/nginx-with-ssl.conf
-
-
-  sed -i "s/___LETSENCRYPT_ADDR___/$LETSENCRYPT_ADDR/g" /etc/nginx/nginx-with-ssl.conf
-  sed -i "s/___LETSENCRYPT_PORT___/$LETSENCRYPT_PORT/g" /etc/nginx/nginx-with-ssl.conf
 
   #go!
   cat /etc/nginx/nginx.conf
