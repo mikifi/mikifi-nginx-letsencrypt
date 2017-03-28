@@ -7,6 +7,7 @@ RUN apk add openssl
 RUN openssl dhparam -out /etc/nginx/dhparams.pem 2048
 
 COPY install-cert.sh /etc/nginx/
+RUN chmod +x /etc/nginx/install-cert.sh
 
 # default command
 CMD /etc/nginx/install-cert.sh
