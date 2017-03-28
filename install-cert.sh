@@ -6,15 +6,12 @@ if [ -z "$MY_DOMAIN_NAME" ]; then
     exit 1
 fi
 
+# Put your domain name into the nginx reverse proxy config.
+sed -i "s/___my.example.com___/$MY_DOMAIN_NAME/g" /etc/nginx/nginx.conf
+
 if [ ! -d "/etc/letsencrypt/live/$MY_DOMAIN_NAME" ]; then
 
-
   # /etc/certbot/certbot-auto certonly --webroot -w /etc/nginx/www -d $MY_DOMAIN_NAME
-
-
-  # Put your domain name into the nginx reverse proxy config.
-  sed -i "s/___my.example.com___/$MY_DOMAIN_NAME/g" /etc/nginx/nginx.conf
-
   cat /etc/nginx/nginx.conf
   echo .
   echo Firing up nginx in the background.
@@ -40,26 +37,28 @@ if [ ! -d "/etc/letsencrypt/live/$MY_DOMAIN_NAME" ]; then
       sleep 2
   done
 
-  echo replacing ___my.example.com___/$MY_DOMAIN_NAME
-  echo replacing ___APPLICATION_IP___/$APP_ADDR
-  echo replacing ___APPLICATION_PORT___/$APP_PORT
-
-  # Put your domain name into the nginx reverse proxy config.
-  sed -i "s/___my.example.com___/$MY_DOMAIN_NAME/g" /etc/nginx/nginx-with-ssl.conf
-
-  # Add your app's container IP and port into config
-  sed -i "s/___APPLICATION_ADDR___/$APP_ADDR/g" /etc/nginx/nginx-with-ssl.conf
-  sed -i "s/___APPLICATION_PORT___/$APP_PORT/g" /etc/nginx/nginx-with-ssl.conf
-
-  #go!
-  cat /etc/nginx/nginx.conf
   echo .
   echo Killing nginx
-  kill $(ps aux | grep '[n]ginx' | awk '{print $2}')
+  nginx -s stop
 
-
-  cp /etc/nginx/nginx-with-ssl.conf /etc/nginx/nginx.conf
 fi
+
+echo replacing ___my.example.com___/$MY_DOMAIN_NAME
+echo replacing ___APPLICATION_IP___/$APP_ADDR
+echo replacing ___APPLICATION_PORT___/$APP_PORT
+
+
+# Put your domain name into the nginx reverse proxy config.
+sed -i "s/___my.example.com___/$MY_DOMAIN_NAME/g" /etc/nginx/nginx-with-ssl.conf
+
+# Add your app's container IP and port into config
+sed -i "s/___APPLICATION_ADDR___/$APP_ADDR/g" /etc/nginx/nginx-with-ssl.conf
+sed -i "s/___APPLICATION_PORT___/$APP_PORT/g" /etc/nginx/nginx-with-ssl.conf
+
+#go!
+cat /etc/nginx/nginx-with-ssl.conf
+
+cp /etc/nginx/nginx-with-ssl.conf /etc/nginx/nginx.conf
 
 echo "Starting nginx in foreground"
 exec nginx -g 'daemon off;'
