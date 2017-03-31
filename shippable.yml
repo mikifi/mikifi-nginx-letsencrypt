@@ -1,6 +1,7 @@
 build:
   ci:
     -  docker build -t mikifi/nginx-letsencrypt .
+    - echo "versionName=$BRANCH.$BUILD_NUMBER" >> $JOB_STATE/nginx-letsencrypt_image.env
   post_ci:
     - docker push mikifi/nginx-letsencrypt:latest
 
