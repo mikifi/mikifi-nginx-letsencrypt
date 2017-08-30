@@ -11,7 +11,6 @@ sed -i "s/___my.example.com___/$MY_DOMAIN_NAME/g" /etc/nginx/nginx.conf
 
 if [ ! -d "/etc/letsencrypt/live/$MY_DOMAIN_NAME" ]; then
 
-  # /etc/certbot/certbot-auto certonly --webroot -w /etc/nginx/www -d $MY_DOMAIN_NAME
   cat /etc/nginx/nginx.conf
   echo .
   echo Firing up nginx in the background.
@@ -40,19 +39,18 @@ if [ ! -d "/etc/letsencrypt/live/$MY_DOMAIN_NAME" ]; then
   echo .
   echo Killing nginx
   nginx -s stop
-
 fi
-
-echo replacing ___my.example.com___/$MY_DOMAIN_NAME
-echo replacing ___APPLICATION_IP___/$APP_ADDR
-echo replacing ___APPLICATION_PORT___/$APP_PORT
 
 
 # Put your domain name into the nginx reverse proxy config.
+echo replacing ___my.example.com___/$MY_DOMAIN_NAME
 sed -i "s/___my.example.com___/$MY_DOMAIN_NAME/g" /etc/nginx/nginx-with-ssl.conf
 
 # Add your app's container IP and port into config
+echo replacing ___APPLICATION_IP___/$APP_ADDR
 sed -i "s/___APPLICATION_ADDR___/$APP_ADDR/g" /etc/nginx/nginx-with-ssl.conf
+
+echo replacing ___APPLICATION_PORT___/$APP_PORT
 sed -i "s/___APPLICATION_PORT___/$APP_PORT/g" /etc/nginx/nginx-with-ssl.conf
 
 #go!

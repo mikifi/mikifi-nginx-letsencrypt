@@ -24,7 +24,7 @@ Your docker-compose.yml might look something like:
 ```yml
 version: '2'
 services:
-  beehive:
+  mybackend:
     image: my-backend-image:latest
     container_name: mybackend
     mem_limit: 1G
