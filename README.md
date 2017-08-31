@@ -5,7 +5,7 @@ nginx https reverse proxy in front of a backend service. Used together with
 the quay.io/letsencrypt/letsencrypt image, the SSL certificate for
 the  given domain can be installed and refreshed more or less automatically.
 
-The approach used are a combination of the solutions described by these resources:
+The approach used is a combination of the solutions described by these resources:
 
 1. http://www.automationlogic.com/using-lets-encrypt-and-docker-for-automatic-ssl/
 2. https://manas.tech/blog/2016/01/25/letsencrypt-certificate-auto-renewal-in-docker-powered-nginx-reverse-proxy.html
@@ -13,8 +13,8 @@ The approach used are a combination of the solutions described by these resource
 
 # How to use it #
 
-One way to use this nginx reverse proxy Docker image is
-combine it with the letsencrypt image and your backend service image using docker-compose.
+One way to use this nginx reverse proxy Docker image is to combine it with the
+letsencrypt image and your backend service image using docker-compose.
 
 ## Docker Compose ##
 
